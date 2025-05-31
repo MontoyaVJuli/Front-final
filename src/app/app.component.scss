@@ -1,0 +1,87 @@
+$primary-color: #573a1b;
+$secondary-color: #f4f4f4;
+$accent-color: rgba(117, 88, 76, 0.72);
+$input-bg: #f9f9f9;
+$border-radius: 10px;
+$font-family-main: "Segoe UI", "Helvetica Neue", sans-serif;
+$font-family-heading: "Playfair Display", serif;
+
+body {
+  font-family: $font-family-main;
+  background-color: $secondary-color;
+  color: $primary-color;
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: $primary-color;
+}
+
+form {
+  background-color: #f4f4f4;
+  padding: 30px;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  .error {
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+  }
+
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+  font-weight: 600;
+  color: $primary-color;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px 15px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: $border-radius;
+  background-color: $input-bg;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color: $accent-color;
+    outline: none;
+  }
+}
+
+button {
+  margin-top: 30px;
+  width: 100%;
+  padding: 14px 24px;
+  background-color: $accent-color;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: darken($accent-color, 14%);
+    transform: scale(1.04);
+  }
+
+  .error {
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+  }
+
+}

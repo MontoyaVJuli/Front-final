@@ -1,0 +1,52 @@
+
+<header class="titulo">
+  <h1>Agregar nuevo cliente</h1>
+</header>
+
+<div class="cliente-formulario">
+
+  <form #clienteForm="ngForm" (ngSubmit)="agregarCliente()" novalidate>
+
+    <label>Nombre:</label>
+    <input type="text" [(ngModel)]="nombre" name="nombre" required #nombreCtrl="ngModel">
+    <div *ngIf="nombreCtrl.invalid && nombreCtrl.touched" class="error">Nombre requerido</div>
+
+    <label>Apellido:</label>
+    <input type="text" [(ngModel)]="apellido" name="apellido" required #apellidoCtrl="ngModel">
+    <div *ngIf="apellidoCtrl.invalid && apellidoCtrl.touched" class="error">Apellido requerido</div>
+
+    <label>Cédula:</label>
+    <input type="text" [(ngModel)]="cedula" name="cedula" required #cedulaCtrl="ngModel">
+    <div *ngIf="cedulaCtrl.invalid && cedulaCtrl.touched" class="error">Cédula requerida</div>
+
+    <label>Teléfono:</label>
+    <input type="text" [(ngModel)]="telefono" name="telefono" required #telefonoCtrl="ngModel">
+    <div *ngIf="telefonoCtrl.invalid && telefonoCtrl.touched" class="error">Teléfono requerido</div>
+
+    <label>Correo electrónico:</label>
+    <input type="email" [(ngModel)]="correo" name="correo" required email #correoCtrl="ngModel">
+    <div *ngIf="correoCtrl.errors?.['required'] && correoCtrl.touched" class="error">
+      Correo requerido
+    </div>
+    <div *ngIf="correoCtrl.errors?.['email'] && correoCtrl.touched" class="error">
+      Correo no válido
+    </div>
+
+    <label>Dirección:</label>
+    <input type="text" [(ngModel)]="direccionResidencia" name="direccion" required #direccionCtrl="ngModel">
+    <div *ngIf="direccionCtrl.invalid && direccionCtrl.touched" class="error">Dirección requerida</div>
+
+    <label>Ciudad:</label>
+      <select [(ngModel)]="ciudad" name="ciudad" required>
+          <option *ngFor="let ciudad of listaCiudades" [value]="ciudad.nombre">{{ ciudad.nombre }}</option>
+      </select>
+
+    <label>Departamento:</label>
+      <select [(ngModel)]="departamento" name="departamento" required>
+          <option *ngFor="let departamento of listaDepartamentos" [value]="departamento.nombre">{{ departamento.nombre }}</option>
+      </select>
+    <button type="submit" [disabled]="clienteForm.invalid" class="enviar">Agregar</button>
+  </form>
+
+</div>
+
