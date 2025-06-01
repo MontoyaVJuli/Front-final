@@ -1,10 +1,13 @@
-export interface Client {
+export interface Empleado {
+  id?: string;
   nombre: string;
   apellido: string;
+  tipoDocumento: string;
   cedula: string;
   telefono: string;
   correo: string;
   direccionResidencia: string;
-  ciudad: string;
   departamento: string;
+  ciudad: string;
+
 }
