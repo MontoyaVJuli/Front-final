@@ -24,6 +24,8 @@ export class AppComponent {
   direccionResidencia = '';
   departamento = '';
   ciudad = '';
+  empresa = '';
+
 
   listaTipoDocumento = [
     { nombre: 'Cedula' }
@@ -36,10 +38,14 @@ export class AppComponent {
   ];
 
   listaCiudades = [
-    { id: 'a4bdaa50-6f59-42cb-bf23-a653a44f009d', nombre: 'Medellín', departamentoId: '59aa818e-2654-4631-a5c8-de2ed384f0ee' },
+    { id: 'a4bdaa50-6f59-42cb-bf23-a653a44f009d', nombre: 'Medellin', departamentoId: '59aa818e-2654-4631-a5c8-de2ed384f0ee' },
     { id: 'eda344d5-b1c0-4a5e-b364-1b2bd64e93b0', nombre: 'Rionegro', departamentoId: '59aa818e-2654-4631-a5c8-de2ed384f0ee' },
-    { id: 'b92a024e-d8e3-4fa7-99d5-e957ed64a91a', nombre: 'Bogotá', departamentoId: '4fcc60f1-1f15-4462-99f1-60031b26864b' },
+    { id: 'b92a024e-d8e3-4fa7-99d5-e957ed64a91a', nombre: 'Bogota', departamentoId: '4fcc60f1-1f15-4462-99f1-60031b26864b' },
     { id: 'a13f5764-1293-4637-819e-9f579608155f', nombre: 'Cali', departamentoId: 'b1ba914e-8435-4ee5-bab5-0b86c9dd7e9c' },
+  ];
+
+  listaEmpresa = [
+    { id:'c4bdaa70-6f50-67cb-bf23-a653a44f009d', nombre: 'Empresa ejemplo' }
   ];
 
   ciudadesFiltradas: any[] = [];
@@ -54,33 +60,35 @@ export class AppComponent {
   }
 
   agregarEmpleado() {
-    if (!this.nombre || !this.apellido || !this.cedula || !this.telefono || !this.correo || !this.direccionResidencia || !this.ciudad || !this.departamento) {
+    if (!this.nombre || !this.apellido || !this.cedula || !this.telefono || !this.correo
+        || !this.direccionResidencia || !this.ciudad || !this.departamento || !this.empresa) {
       alert('Por favor completa todos los campos');
       return;
     }
 
     const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.correo);
     if (!correoValido) {
-      alert('Correo electrónico inválido');
+      alert('El correo electrónico ingresado no es válido');
       return;
     }
 
-    const telefonoValido = /^[+]?[\d\s\-()]{7,20}$/.test(this.telefono);
+    const telefonoValido = /^\+?[0-9]{7,20}$/.test(this.telefono);
+
     if (!telefonoValido) {
-      alert('Teléfono inválido (debe contener solo números, espacios o +)');
+      alert('El número de teléfono ingresado no es válido (debe contener solo números, espacios o +)');
       return;
     }
 
     const empleado: Empleado = {
-      nombre: this.nombre,
-      apellido: this.apellido,
-      tipoDocumento: this.tipoDocumento,
-      cedula: this.cedula,
-      telefono: this.telefono,
-      correo: this.correo,
-      direccionResidencia: this.direccionResidencia,
-      ciudad: this.ciudad,
-      departamento: this.departamento,
+      nombre: this.nombre.trim(),
+      apellido: this.apellido.trim(),
+      cedula: this.cedula.trim(),
+      telefono: this.telefono.trim(),
+      correo: this.correo.trim(),
+      direccionResidencia: this.direccionResidencia.trim(),
+      ciudad: { id: this.ciudad },
+      departamento: { id: this.departamento },
+      empresa: { id: this.empresa }
     };
 
     this.empleadoService.createEmpleado(empleado).subscribe({

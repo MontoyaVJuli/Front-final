@@ -10,9 +10,10 @@ export class EmpleadoServiceService {
   private apiUrl = 'http://localhost:8080/api/v1/empleados';
   private http = inject(HttpClient);
 
-  createEmpleado(empleado: Empleado): Observable<Empleado> {
-    return this.http.post<Empleado>(this.apiUrl, empleado);
+  createEmpleado(empleado: Empleado): Observable<string> {
+    return this.http.post(this.apiUrl, empleado, { responseType: 'text' });
   }
+
 
   getClient(): Observable<Empleado[] > {
     return this.http.get<Empleado[]>(this.apiUrl)

@@ -2,12 +2,12 @@ export interface Empleado {
   id?: string;
   nombre: string;
   apellido: string;
-  tipoDocumento: string;
+  tipoDocumento?: string;
   cedula: string;
   telefono: string;
   correo: string;
   direccionResidencia: string;
-  departamento: string;
-  ciudad: string;
-
+  departamento: { id: string };
+  ciudad: { id: string };
+  empresa: { id: string };
 }
