@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Empleado } from '@app/models/empleado.model';
 import { EmpleadoServiceService } from '@app/services';
+import { Component, OnInit } from '@angular/core';
+import { DepartamentoService} from "@app/services/departamento.service";
+import { CiudadService} from "@app/services/ciudad.service";
+import { EmpresaService} from "@app/services/empresa.service";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +15,7 @@ import { EmpleadoServiceService } from '@app/services';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Lilfac';
   id = '00000000-0000-0000-0000-000000000000';
   nombre = '';
@@ -28,40 +31,40 @@ export class AppComponent {
 
 
   listaTipoDocumento = [
-    { nombre: 'Cedula' }
+    { id: 'CC', nombre: 'Cédula de ciudadanía' },
   ];
 
-  listaDepartamentos = [
-    { id: '59aa818e-2654-4631-a5c8-de2ed384f0ee', nombre: 'Antioquia' },
-    { id: '4fcc60f1-1f15-4462-99f1-60031b26864b', nombre: 'Cundinamarca' },
-    { id: 'b1ba914e-8435-4ee5-bab5-0b86c9dd7e9c', nombre: 'Valle del Cauca' },
-  ];
-
-  listaCiudades = [
-    { id: 'a4bdaa50-6f59-42cb-bf23-a653a44f009d', nombre: 'Medellin', departamentoId: '59aa818e-2654-4631-a5c8-de2ed384f0ee' },
-    { id: 'eda344d5-b1c0-4a5e-b364-1b2bd64e93b0', nombre: 'Rionegro', departamentoId: '59aa818e-2654-4631-a5c8-de2ed384f0ee' },
-    { id: 'b92a024e-d8e3-4fa7-99d5-e957ed64a91a', nombre: 'Bogota', departamentoId: '4fcc60f1-1f15-4462-99f1-60031b26864b' },
-    { id: 'a13f5764-1293-4637-819e-9f579608155f', nombre: 'Cali', departamentoId: 'b1ba914e-8435-4ee5-bab5-0b86c9dd7e9c' },
-  ];
-
-  listaEmpresa = [
-    { id:'c4bdaa70-6f50-67cb-bf23-a653a44f009d', nombre: 'Empresa ejemplo' }
-  ];
-
+  listaDepartamentos: any[] = [];
+  listaCiudades: any[] = [];
+  listaEmpresa: any[] = [];
   ciudadesFiltradas: any[] = [];
 
-  constructor(private empleadoService: EmpleadoServiceService) {}
+  constructor(
+      private empleadoService: EmpleadoServiceService,
+      private departamentoService: DepartamentoService,
+      private ciudadService: CiudadService,
+      private empresaService: EmpresaService
+
+){}
+
+  ngOnInit(): void {
+    this.departamentoService.getDepartamentos().subscribe(data => this.listaDepartamentos = data);
+    this.ciudadService.getCiudades().subscribe(data => this.listaCiudades = data);
+    this.empresaService.getEmpresas().subscribe(data => this.listaEmpresa = data);
+  }
 
   onDepartamentoChange() {
     this.ciudadesFiltradas = this.listaCiudades.filter(
-        ciudad => ciudad.departamentoId === this.departamento
+        ciudad => ciudad.departamento?.id === this.departamento
     );
     this.ciudad = '';
   }
 
   agregarEmpleado() {
-    if (!this.nombre || !this.apellido || !this.cedula || !this.telefono || !this.correo
-        || !this.direccionResidencia || !this.ciudad || !this.departamento || !this.empresa) {
+    if (
+        !this.nombre || !this.apellido || !this.cedula || !this.telefono ||
+        !this.correo || !this.direccionResidencia || !this.departamento || !this.ciudad || !this.empresa
+    ) {
       alert('Por favor completa todos los campos');
       return;
     }
@@ -73,9 +76,8 @@ export class AppComponent {
     }
 
     const telefonoValido = /^\+?[0-9]{7,20}$/.test(this.telefono);
-
     if (!telefonoValido) {
-      alert('El número de teléfono ingresado no es válido (debe contener solo números, espacios o +)');
+      alert('El número de teléfono ingresado no es válido (debe contener solo números y opcional +)');
       return;
     }
 

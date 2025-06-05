@@ -15,19 +15,19 @@ export class EmpleadoServiceService {
   }
 
 
-  getClient(): Observable<Empleado[] > {
+  getEmpleado(): Observable<Empleado[] > {
     return this.http.get<Empleado[]>(this.apiUrl)
   }
 
-  updateClient(empleado: Empleado): Observable<Empleado[] >{
+  updateEmpleado(empleado: Empleado): Observable<Empleado[] >{
     return this.http.put<Empleado[]>(`${this.apiUrl}`, empleado);
   }
 
-  patchClient(id: string, partialEmpleado: Partial<Empleado>): Observable<Empleado> {
+  patchEmpleado(id: string, partialEmpleado: Partial<Empleado>): Observable<Empleado> {
     return this.http.patch<Empleado>(`${this.apiUrl}/${id}`, partialEmpleado);
   }
 
-  deleteClient(id: string): Observable<void>{
+  deleteEmpleado(id: string): Observable<void>{
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 

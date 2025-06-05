@@ -7,7 +7,7 @@ export interface Empleado {
   telefono: string;
   correo: string;
   direccionResidencia: string;
-  departamento: { id: string };
+  departamento: { id: string, };
   ciudad: { id: string };
   empresa: { id: string };
 }
